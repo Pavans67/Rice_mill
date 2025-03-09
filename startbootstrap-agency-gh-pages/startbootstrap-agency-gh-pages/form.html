@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Send Email</title>
+</head>
+<body>
+    <h5>enter complain</h5>
+    <form id="contactForm">
+        <label for="name">From</label>
+        <input type="text" id="name" name="name" placeholder="Full Name" required>
+
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" placeholder="Email" required>
+
+        <label for="phone">Phone</label>
+        <input type="text" id="phone" name="phone" placeholder="Phone">
+
+        <label for="message">Message</label>
+        <textarea id="message" name="message" placeholder="Hi ..." required></textarea>
+
+        <button type="submit">Send</button>
+    </form>
+
+    <script>
+        document.getElementById("contactForm").addEventListener("submit", async function(event) {
+            event.preventDefault();
+
+            const name = document.getElementById("name").value;
+            const email = document.getElementById("email").value;
+            const phone = document.getElementById("phone").value;
+            const message = document.getElementById("message").value;
+
+            const response = await fetch("http://localhost:5001/send-message", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ name, email, phone, message }),
+            });
+
+            const result = await response.json();
+            alert(result.message);
+            window.location.href="Index.html"
+        });
+    </script>
+</body>
+</html>
+
